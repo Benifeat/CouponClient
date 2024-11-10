@@ -1,0 +1,1 @@
+this is the fake data that we will implement for the users/coupons and any other data needed in the project need to add encryption for the credentials

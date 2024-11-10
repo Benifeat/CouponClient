@@ -1,0 +1,12 @@
+
+{
+    "users": [
+      {
+        "id": 1,
+        "email": "Beni@gmail.com",
+        "password": "123456Bb!!",
+        "role": "admin",
+        "name": "Beni"
+      }
+    ]
+  }

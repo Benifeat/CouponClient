@@ -1,0 +1,6 @@
+/*admin page will show all different analytic displays
+ one is the reports in which we will dispaly
+ the amount of times coupons where used and which user created them 
+ also the expiration date of the coupons and the amount of discount per coupon
+ maybe also the double usage of a coupon
+ */
