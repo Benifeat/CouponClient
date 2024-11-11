@@ -1,4 +1,5 @@
 //first dashboard panel
+import Reports from './Reports';
 const AdminDashboard = () => {
     return (
         <div>
