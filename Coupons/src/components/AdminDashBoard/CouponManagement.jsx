@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import AddCoupon from '../CouponInput/AddCoupon';
 import EditCoupon from '../CouponInput/EditCoupon';
 import DeleteCoupon from '../CouponInput/DeleteCoupon';
-import { exportToExcel } from '../../service/excelExport';
+import { exportToExcel } from '../../service/ExcelExport';
 
 const CouponManagement = () => {
     const { user } = useAuth();
