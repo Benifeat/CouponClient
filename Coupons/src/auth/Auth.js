@@ -1,4 +1,3 @@
-// auth/Auth.js
 import mockData from "../Data/MockData.json";
 
 // Simple hash function for demo purposes

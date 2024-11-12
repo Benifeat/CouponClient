@@ -1,4 +1,3 @@
-// components/Front/Nav.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, Home, X } from 'lucide-react';

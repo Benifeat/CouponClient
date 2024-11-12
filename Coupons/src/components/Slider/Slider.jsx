@@ -1,7 +1,6 @@
 /*left side of homepage the slider of advertisments and coupons
 a bit of creativity wont harm anyone unless you are the developer working on it in 2 am
 */
-// components/Slider/Slider.jsx
 import { useState, useEffect } from 'react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
 

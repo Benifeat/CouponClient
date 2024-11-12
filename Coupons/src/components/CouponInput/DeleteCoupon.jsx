@@ -1,5 +1,4 @@
-// components/AdminDashBoard/DeleteCoupon.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { X, AlertTriangle } from 'lucide-react';
 import { api } from '../../auth/api';
 

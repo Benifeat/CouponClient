@@ -1,4 +1,3 @@
-// components/AdminDashboard/CouponManagement/CouponManagement.jsx
 import { useState } from 'react';
 import { Grid, List, Search, Plus, Download } from 'lucide-react';
 import { useCoupons } from '../../context/CouponContext';

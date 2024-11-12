@@ -1,4 +1,3 @@
-// src/context/CouponContext.js
 import { createContext, useContext, useState, useEffect } from "react";
 import { api } from "../auth/api";
 import { useAuth } from "./AuthContext";

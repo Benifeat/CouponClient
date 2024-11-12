@@ -1,4 +1,3 @@
-// pages/HomePage/HomePage.jsx
 import { useState, useEffect } from 'react';
 import Slider from '../../components/Slider/Slider';
 import Checkout from '../../components/CheckOut/Checkout';

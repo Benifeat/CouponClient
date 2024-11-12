@@ -1,4 +1,3 @@
-// components/AdminDashboard/UserManagement/UserManagement.jsx
 import { useState } from 'react';
 import { UserPlus, Edit2, Trash2, Shield, User as UserIcon, Search } from 'lucide-react';
 import AddUser from './AddUser';

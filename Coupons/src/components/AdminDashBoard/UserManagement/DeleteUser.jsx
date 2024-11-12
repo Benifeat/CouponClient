@@ -1,4 +1,3 @@
-// components/AdminDashboard/UserManagement/DeleteUser.jsx
 import { useState } from 'react';
 import { X, AlertTriangle, AlertCircle } from 'lucide-react';
 import { useUsers } from '../../../context/UserContext';

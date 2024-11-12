@@ -1,5 +1,4 @@
-// components/AdminDashBoard/AddCoupon.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { X, AlertCircle } from 'lucide-react';
 import { useCoupons } from '../../context/CouponContext';
 

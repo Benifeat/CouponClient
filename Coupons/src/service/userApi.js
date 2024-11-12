@@ -1,5 +1,3 @@
-// src/services/userApi.js
-
 // Mock data storage
 let users = [
   {

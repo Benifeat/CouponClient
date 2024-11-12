@@ -1,7 +1,6 @@
-// components/AdminDashBoard/CouponInput/EditCoupon.jsx
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { X, AlertCircle, Save } from 'lucide-react';
-import { useCoupons } from '../../context/CouponContext'; 
+import { useCoupons } from '../../context/CouponContext';
 
 const EditCoupon = ({ coupon, onClose, onCouponUpdated }) => {
     const { updateCoupon } = useCoupons(); // Get updateCoupon from context
@@ -53,7 +52,7 @@ const EditCoupon = ({ coupon, onClose, onCouponUpdated }) => {
                 discountValue: Number(formData.discountValue),
                 maxUses: formData.maxUses ? Number(formData.maxUses) : null
             });
-            
+
             onCouponUpdated?.(updatedCoupon);
         } catch (err) {
             console.error('Error updating coupon:', err);

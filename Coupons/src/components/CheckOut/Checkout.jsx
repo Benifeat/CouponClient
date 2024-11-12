@@ -1,4 +1,3 @@
-// components/CheckOut/Checkout.jsx
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useCoupons } from '../../context/CouponContext';

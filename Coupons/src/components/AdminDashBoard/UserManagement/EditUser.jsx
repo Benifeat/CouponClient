@@ -1,4 +1,3 @@
-// components/AdminDashboard/UserManagement/EditUser.jsx
 import { useState, useEffect } from 'react';
 import { X, AlertCircle } from 'lucide-react';
 import { useUsers } from '../../../context/UserContext';
