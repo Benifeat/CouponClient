@@ -1,90 +1,32 @@
-//main app with the usage of routes and different pages and tabs
+import { Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/HomePage/HomePage';
 import AdminDashboard from './components/AdminDashBoard/AdminDashBoard';
 import Nav from './components/Front/Nav';
-import { authenticateUser } from './auth/Auth';
+import { AuthProvider } from './context/AuthContext';
+import { CouponProvider } from './context/CouponContext';
+import { UserProvider } from './context/UserContext';
 
 function App() {
-  const [user, setUser] = useState(null);
   const [showLoginForm, setShowLoginForm] = useState(false);
-  const [pendingCouponCode, setPendingCouponCode] = useState(null);
-  const [activeTab, setActiveTab] = useState('anonymous');
-  //handle login authentication sending for check
-  const handleLogin = async (email, password) => {
-    try {
-      const authenticatedUser = await authenticateUser(email, password);
-      setUser(authenticatedUser);
-      setShowLoginForm(false);
-      return true;
-    } catch (error) {
-      console.error('Login failed:', error);
-      return false;
-    }
-  };
-  //handle logout authentication
-  const handleLogout = () => {
-    setUser(null);
-    setPendingCouponCode(null);
-    setActiveTab('anonymous');
-  };
-  //dispaly login form
-  const toggleLoginForm = (couponCode = null) => {
-    if (couponCode) {
-      setPendingCouponCode(couponCode);
-    }
-    setShowLoginForm(!showLoginForm);
-  };
-  // close the form
-  const handleLoginFormClose = () => {
-    setShowLoginForm(false);
-    setActiveTab('anonymous');
-    setPendingCouponCode(null);
-  };
 
   return (
-    <>
-      {/* navbar */}
-      <Nav
-        isLoggedIn={!!user}
-        user={user}
-        onLogin={handleLogin}
-        onLogout={handleLogout}
-        showLoginForm={showLoginForm}
-        setShowLoginForm={setShowLoginForm}
-        onLoginFormClose={handleLoginFormClose}
-      />
-      <Routes>
-        {/* home page */}
-        <Route
-          path="/"
-          element={
-            <HomePage
-              isLoggedIn={!!user}
-              userEmail={user?.email}
-              toggleLoginForm={toggleLoginForm}
-              pendingCouponCode={pendingCouponCode}
-              setPendingCouponCode={setPendingCouponCode}
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-              onLoginFormClose={handleLoginFormClose}
-            />
-          }
-        />
-        {/* admin dashboard when autherized */}
-        <Route
-          path="/dashboard"
-          element={
-            user?.role === 'admin' ? (
-              <AdminDashboard />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-      </Routes>
-    </>
+    <AuthProvider>
+      <UserProvider>
+        <CouponProvider>
+          <div className="min-h-screen bg-gray-100">
+            <Nav showLoginForm={showLoginForm} setShowLoginForm={setShowLoginForm} />
+            <Routes>
+              <Route path="/" element={<HomePage setShowLoginForm={setShowLoginForm} />} />
+              <Route
+                path="/dashboard"
+                element={<AdminDashboard />}
+              />
+            </Routes>
+          </div>
+        </CouponProvider>
+      </UserProvider>
+    </AuthProvider>
   );
 }
 

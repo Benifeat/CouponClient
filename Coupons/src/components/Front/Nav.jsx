@@ -1,19 +1,14 @@
+// components/Front/Nav.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, Home, X } from 'lucide-react';
 import Login from './Login';
+import { useAuth } from '../../context/AuthContext';
 
-const Nav = ({
-    isLoggedIn,
-    user,
-    onLogin,
-    onLogout,
-    showLoginForm,
-    setShowLoginForm,
-    onLoginFormClose
-}) => {
+const Nav = ({ showLoginForm, setShowLoginForm }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const navigate = useNavigate();
+    const { user, logout, isAdmin } = useAuth();
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -21,45 +16,30 @@ const Nav = ({
             if (showDropdown && !event.target.closest('.user-menu')) {
                 setShowDropdown(false);
             }
-            if (showLoginForm && !event.target.closest('.login-form') && !event.target.closest('.login-button')) {
-                handleLoginFormClose();
-            }
         };
 
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [showDropdown, showLoginForm]);
+    }, [showDropdown]);
+
     const handleMenuClick = () => {
         setShowDropdown(!showDropdown);
     };
+
     const handleDashboardClick = () => {
         navigate('/dashboard');
         setShowDropdown(false);
     };
+
     const handleHomeClick = () => {
         navigate('/');
         setShowDropdown(false);
     };
 
     const handleLogoutClick = () => {
-        onLogout();
+        logout();
         setShowDropdown(false);
         navigate('/');
-    };
-
-    const handleLoginSuccess = async (email, password) => {
-        const success = await onLogin(email, password);
-        if (success) {
-            setShowLoginForm(false);
-        }
-        return success;
-    };
-
-    const handleLoginFormClose = () => {
-        setShowLoginForm(false);
-        if (onLoginFormClose) {
-            onLoginFormClose();
-        }
     };
 
     return (
@@ -77,14 +57,14 @@ const Nav = ({
 
                     {/* Login/User Menu */}
                     <div>
-                        {isLoggedIn ? (
+                        {user ? (
                             <div className="relative user-menu">
                                 <button
                                     onClick={handleMenuClick}
                                     className="flex items-center gap-2 bg-gray-700 px-3 py-1 rounded hover:bg-gray-600 transition-colors"
                                 >
                                     <Menu size={20} />
-                                    <span>{user?.email}</span>
+                                    <span>{user.email}</span>
                                 </button>
 
                                 {showDropdown && (
@@ -120,27 +100,22 @@ const Nav = ({
                 </div>
             </nav>
 
-            {/* Login form */}
-            {showLoginForm && !isLoggedIn && (
+            {/* Login form modal */}
+            {showLoginForm && !user && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 z-[101] flex items-start justify-center">
                     <div className="login-form mt-20 bg-white rounded-lg shadow-lg p-6 w-96 relative">
-                        {/* Close button  most important!*/}
                         <button
-                            onClick={handleLoginFormClose}
+                            onClick={() => setShowLoginForm(false)}
                             className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 transition-colors"
                         >
                             <X size={20} />
                         </button>
 
-                        {/* Login user*/}
                         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
                             Login to Your Account
                         </h2>
 
-                        <Login
-                            onLogin={handleLoginSuccess}
-                            isDropdown={true}
-                        />
+                        <Login onSuccess={() => setShowLoginForm(false)} />
                     </div>
                 </div>
             )}

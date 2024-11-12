@@ -1,12 +1,140 @@
-
 {
-    "users": [
-      {
-        "id": 1,
-        "email": "Beni@gmail.com",
-        "password": "123456Bb!!",
-        "role": "admin",
-        "name": "Beni"
+  "users": [
+    {
+      "id": 1,
+      "email": "Beni@gmail.com",
+      "password": "123456Bb!!",
+      "role": "admin",
+      "name": "Beni"
+    },
+    {
+      "id": 2,
+      "email": "guest@gmail.com",
+      "password": "123456",
+      "role": "user",
+      "name": "guest"
+    }
+  ],
+  "coupons": [
+    {
+      "id": 1,
+      "code": "TECH30",
+      "title": "BlackFriday",
+      "description": "Get 30% off on all products!",
+      "discountType": "percentage",
+      "discountValue": 30,
+      "expirationDate": "2024-12-31",
+      "maxUses": 1000,
+      "currentUses": 45,
+      "isStackable": true,
+      "createdBy": 1,
+      "createdAt": "2024-01-01",
+      "isActive": true,
+      "image": "coupon30.png",
+      "advertisement": {
+        "title": "BlackFriday Sale!!",
+        "description": "Get 30% off on all products!",
+        "backgroundImage": "BlackFriday.jpg",
+        "textColor": "text-white"
       }
-    ]
-  }
+    },
+    {
+      "id": 2,
+      "code": "SHOES10",
+      "title": "Shoes",
+      "description": "10% off on all shoes",
+      "discountType": "percentage",
+      "discountValue": 10,
+      "expirationDate": "2024-10-31",
+      "maxUses": 500,
+      "currentUses": 123,
+      "isStackable": false,
+      "createdBy": 1,
+      "createdAt": "2024-02-01",
+      "isActive": true,
+      "image": "coupon10.png",
+      "advertisement": {
+        "backgroundImage": "shoeCoupon.jpg"
+      }
+    },
+    {
+      "id": 3,
+      "code": "DONUT60",
+      "title": "Hanuka",
+      "description": "60% off on selected items",
+      "discountType": "percentage",
+      "discountValue": 60,
+      "expirationDate": "2024-12-31",
+      "maxUses": 300,
+      "currentUses": 89,
+      "isStackable": false,
+      "createdBy": 1,
+      "createdAt": "2024-03-01",
+      "isActive": true,
+      "image": "coupon60.png",
+      "advertisement": {
+        "backgroundImage": "hanuka.PNG"
+      }
+    },
+    {
+      "id": 4,
+      "code": "SANTA15",
+      "title": "Christmas",
+      "description": "Get 15% off on all products!",
+      "discountType": "percentage",
+      "discountValue": 15,
+      "expirationDate": "2024-12-31",
+      "maxUses": 800,
+      "currentUses": 234,
+      "isStackable": true,
+      "createdBy": 1,
+      "createdAt": "2024-03-15",
+      "isActive": true,
+      "image": "coupon15.png",
+      "advertisement": {
+        "title": "Get your Christmas gift now!",
+        "description": "Get 15% off on all products!",
+        "backgroundImage": "ChristmasAd.png",
+        "textColor": "text-white"
+      }
+    },
+    {
+      "id": 5,
+      "code": "SPRING25",
+      "title": "Spring Sale",
+      "description": "25% off spring collection",
+      "discountType": "percentage",
+      "discountValue": 25,
+      "expirationDate": "2024-06-30",
+      "maxUses": 1000,
+      "currentUses": 156,
+      "isStackable": true,
+      "createdBy": 1,
+      "createdAt": "2024-03-20",
+      "isActive": true
+    }
+  ],
+  "recentActivity": [
+    {
+      "id": 1,
+      "timestamp": "2024-03-20T10:30:00Z",
+      "couponCode": "TECH30",
+      "action": "Used",
+      "details": "Applied to order #12345"
+    },
+    {
+      "id": 2,
+      "timestamp": "2024-03-20T09:15:00Z",
+      "couponCode": "SHOES10",
+      "action": "Created",
+      "details": "New coupon added by admin"
+    },
+    {
+      "id": 3,
+      "timestamp": "2024-03-19T16:45:00Z",
+      "couponCode": "SANTA15",
+      "action": "Modified",
+      "details": "Updated expiration date"
+    }
+  ]
+}

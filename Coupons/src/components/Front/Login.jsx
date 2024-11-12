@@ -1,31 +1,29 @@
-//reusable login form
+// components/Front/Login.jsx
 import { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
 
-const Login = ({ onLogin, isDropdown = false }) => {
+const Login = ({ onSuccess }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [keepLoggedIn, setKeepLoggedIn] = useState(false);
     const [error, setError] = useState('');
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
         try {
-            // Add your authentication logic here
-            const success = await onLogin(email, password, keepLoggedIn);
-            if (success) {
-                setEmail('');
-                setPassword('');
-            }
+            await login(email, password);
+            if (onSuccess) onSuccess();
         } catch (err) {
             setError('Invalid email or password');
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className={isDropdown ? "p-0" : "p-6 bg-white rounded-lg shadow-lg"}>
-            <div className="mb-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
                 <input
                     type="email"
                     value={email}
@@ -34,7 +32,7 @@ const Login = ({ onLogin, isDropdown = false }) => {
                     className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
                 />
             </div>
-            <div className="mb-4">
+            <div>
                 <input
                     type="password"
                     value={password}
@@ -43,8 +41,8 @@ const Login = ({ onLogin, isDropdown = false }) => {
                     className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
                 />
             </div>
-            {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
-            <div className="mb-4">
+            {error && <div className="text-red-500 text-sm">{error}</div>}
+            <div>
                 <a href="#" className="text-blue-600 text-sm">
                     Forgot the password?
                 </a>
@@ -55,7 +53,7 @@ const Login = ({ onLogin, isDropdown = false }) => {
             >
                 Sign in
             </button>
-            <div className="mt-4 flex items-center">
+            <div className="flex items-center">
                 <input
                     type="checkbox"
                     id="keep-logged"
@@ -64,7 +62,7 @@ const Login = ({ onLogin, isDropdown = false }) => {
                     className="mr-2"
                 />
                 <label htmlFor="keep-logged" className="text-sm text-gray-600">
-                    keep me logged-in
+                    Keep me logged-in
                 </label>
             </div>
         </form>

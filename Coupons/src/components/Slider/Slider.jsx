@@ -1,9 +1,32 @@
 /*left side of homepage the slider of advertisments and coupons
 a bit of creativity wont harm anyone unless you are the developer working on it in 2 am
 */
+// components/Slider/Slider.jsx
 import { useState, useEffect } from 'react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
-//slider functionalities of movment
+
+// Import all images
+import Coupon10 from '../../assets/coupon10.png';
+import Coupon60 from '../../assets/coupon60.png';
+import Coupon30 from '../../assets/coupon30.png';
+import Coupon15 from '../../assets/coupon15.png';
+import BlackFriday from '../../assets/BlackFriday.jpg';
+import Shoes from '../../assets/shoeCoupon.jpg';
+import Hanuka from '../../assets/hanuka.PNG';
+import Christmas from '../../assets/ChristmasAd.png';
+
+// Image mapping
+const IMAGE_MAP = {
+    'coupon10.png': Coupon10,
+    'coupon60.png': Coupon60,
+    'coupon30.png': Coupon30,
+    'coupon15.png': Coupon15,
+    'BlackFriday.jpg': BlackFriday,
+    'shoeCoupon.jpg': Shoes,
+    'hanuka.PNG': Hanuka,
+    'ChristmasAd.png': Christmas
+};
+
 const Slider = ({ coupons, onCouponSelect, isLoggedIn }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -30,9 +53,12 @@ const Slider = ({ coupons, onCouponSelect, isLoggedIn }) => {
         }
     };
 
+    const getImage = (imagePath) => {
+        return IMAGE_MAP[imagePath] || '';
+    };
+
     return (
         <div className="relative h-full w-full flex flex-col z-0">
-            {/* main back ground */}
             <div className="flex-1 relative overflow-hidden rounded-lg mb-4">
                 <div
                     className="transition-transform duration-500 ease-in-out h-full"
@@ -48,11 +74,10 @@ const Slider = ({ coupons, onCouponSelect, isLoggedIn }) => {
                                 <div
                                     className="flex-1 w-full flex flex-col items-center rounded-lg relative overflow-hidden"
                                     style={{
-                                        backgroundImage: `url(${coupon.advertisement.backgroundImage})`,
-                                        backgroundSize: 'contain',
+                                        backgroundImage: `url(${getImage(coupon.advertisement.backgroundImage)})`,
+                                        backgroundSize: '100% 100%',
                                         backgroundPosition: 'center',
                                         backgroundRepeat: 'no-repeat',
-                                        backgroundSize: '100% 100%'
                                     }}
                                 >
                                     <div className="absolute inset-0 bg-black/30"></div>
@@ -67,7 +92,6 @@ const Slider = ({ coupons, onCouponSelect, isLoggedIn }) => {
                                             </p>
                                         </div>
 
-                                        {/* the coupon itself */}
                                         <div className="w-full flex justify-center p-6">
                                             <div
                                                 onClick={() => handleCouponClick(coupon)}
@@ -75,7 +99,7 @@ const Slider = ({ coupons, onCouponSelect, isLoggedIn }) => {
                                             >
                                                 <div className="bg-white/0 rounded-lg shadow-xl">
                                                     <img
-                                                        src={coupon.image}
+                                                        src={getImage(coupon.image)}
                                                         alt={`${coupon.title} - ${coupon.code}`}
                                                         className="w-full object-contain max-h-[200px]"
                                                     />
@@ -95,7 +119,6 @@ const Slider = ({ coupons, onCouponSelect, isLoggedIn }) => {
                 </div>
             </div>
 
-            {/* up/down */}
             <button
                 onClick={prevSlide}
                 className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white"

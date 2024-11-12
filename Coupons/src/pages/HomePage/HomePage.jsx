@@ -1,112 +1,79 @@
-//home page featuring the slider and the checkout displayes and the nav bar
+// pages/HomePage/HomePage.jsx
 import { useState, useEffect } from 'react';
 import Slider from '../../components/Slider/Slider';
 import Checkout from '../../components/CheckOut/Checkout';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { useCoupons } from '../../context/CouponContext';
 
-//background image checkout
+// Import assets
 import CheckoutBg from '../../assets/Confetti.png';
 
-// images sliders
-import Coupon10 from '../../assets/coupon10.png';
-import Coupon60 from '../../assets/coupon60.png';
-import Coupon30 from '../../assets/coupon30.png';
-import Coupon15 from '../../assets/coupon15.png';
-import BlackFriday from '../../assets/BlackFriday.jpg';
-import Shoes from '../../assets/shoeCoupon.jpg';
-import Hanuka from '../../assets/hanuka.PNG';
-import Christmas from '../../assets/ChristmasAd.png';
-
-const HomePage = ({
-    isLoggedIn,
-    userEmail,
-    toggleLoginForm,
-    pendingCouponCode,
-    setPendingCouponCode,
-    activeTab,
-    setActiveTab
-}) => {
+const HomePage = ({ setShowLoginForm }) => {
+    const { user } = useAuth();
+    const { coupons, loading } = useCoupons();
     const [selectedCoupon, setSelectedCoupon] = useState('');
-    // Handle pending coupon code when user logs in
-    useEffect(() => {
-        if (isLoggedIn && pendingCouponCode) {
-            setSelectedCoupon(pendingCouponCode);
-            setPendingCouponCode(null);
-        }
-    }, [isLoggedIn, pendingCouponCode]);
+    const [activeTab, setActiveTab] = useState('anonymous');
 
+    // Handle coupon selection when user logs in
     useEffect(() => {
-        if (!isLoggedIn) {
+        if (!user) {
             setSelectedCoupon('');
         }
-    }, [isLoggedIn]);
-
-    // Coupon data will be transferred to mock data json
-    const dummyCoupons = [
-        {
-            image: Coupon30,
-            title: "BlackFriday",
-            code: "TECH30",
-            advertisement: {
-                title: "BlackFriday Sale!!",
-                description: "Get 30% off on all products!",
-                backgroundImage: BlackFriday,
-                textColor: "text-white"
-            }
-        },
-        {
-            image: Coupon10,
-            title: "Shoes",
-            code: "SHOES10",
-            advertisement: {
-                backgroundImage: Shoes,
-            }
-        },
-        {
-            image: Coupon60,
-            title: "Hanuka",
-            code: "DONUT60",
-            advertisement: {
-                backgroundImage: Hanuka,
-            }
-        },
-        {
-            image: Coupon15,
-            title: "Christmas",
-            code: "SANTA15",
-            advertisement: {
-                title: "Get your Christmas gift now!",
-                description: "Get 15% off on all products!",
-                backgroundImage: Christmas,
-                textColor: "text-white"
-            }
-        }
-    ];
+    }, [user]);
 
     // Handle login form for coupon from slider
     const handleCouponSelect = (couponCode) => {
-        if (isLoggedIn) {
-            setSelectedCoupon(couponCode);
-        } else {
-            toggleLoginForm(couponCode);
+        if (!user) {
+            setShowLoginForm(true);
+            return;
         }
+        setSelectedCoupon(couponCode);
+    };
+    const handleMemberLoginClick = () => {
+        setShowLoginForm(true);
+        setActiveTab('login');
     };
 
+    // Filter active coupons and ensure they have required advertisement data
+    const activeCouponsWithAds = coupons.filter(coupon =>
+        coupon.isActive &&
+        coupon.advertisement &&
+        coupon.image &&
+        coupon.advertisement.backgroundImage
+    );
+
+    if (loading) {
+        return (
+            <div className="flex h-[100vh] bg-gray-100 mt-12 items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+        );
+    }
+
+    if (activeCouponsWithAds.length === 0) {
+        return (
+            <div className="flex h-[100vh] bg-gray-100 mt-12 items-center justify-center">
+                <div className="text-center">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">No Active Coupons</h2>
+                    <p className="text-gray-600">Check back later for new offers!</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        // Main page with the slider and checkout display
-        <div className="flex h-[100vh] bg-gray-100 mt-12">
-            <div className="w-[40%] bg-sky-300 p-8">
-                {/* slider call */}
-                <div className="h-[100%]">
+        <div className="flex flex-col md:flex-row h-[100vh] bg-gray-100 mt-12">
+            <div className="w-full md:w-[40%] bg-sky-300 p-4 md:p-8">
+                <div className="h-full">
                     <Slider
-                        coupons={dummyCoupons}
+                        coupons={activeCouponsWithAds}
                         onCouponSelect={handleCouponSelect}
-                        isLoggedIn={isLoggedIn}
+                        isLoggedIn={!!user}
                     />
                 </div>
             </div>
             <div
-                className="flex justify-center items-center w-[60%] p-8 relative"
+                className="flex justify-center items-center w-full md:w-[60%] p-4 md:p-8 relative"
                 style={{
                     background: `linear-gradient(rgba(251, 191, 36, 0.8), rgba(251, 191, 36, 0.8)), url(${CheckoutBg})`,
                     backgroundSize: 'cover',
@@ -114,15 +81,12 @@ const HomePage = ({
                     backgroundRepeat: 'no-repeat'
                 }}
             >
-                {/* checkout call */}
-                <div className="relative z-10">
+                <div className="relative z-10 w-full max-w-md">
                     <Checkout
-                        isLoggedIn={isLoggedIn}
-                        userEmail={userEmail}
                         selectedCoupon={selectedCoupon}
-                        toggleLoginForm={toggleLoginForm}
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
+                        onMemberLoginClick={handleMemberLoginClick}
                     />
                 </div>
             </div>
