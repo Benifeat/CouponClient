@@ -12,7 +12,7 @@ import Coupon30 from '../../assets/coupon30.png';
 import Coupon15 from '../../assets/coupon15.png';
 import BlackFriday from '../../assets/BlackFriday.jpg';
 import Shoes from '../../assets/shoeCoupon.jpg';
-import Hanuka from '../../assets/hanuka.PNG';
+import Hanuka from '../../assets/hanuka.png';
 import Christmas from '../../assets/ChristmasAd.png';
 
 // Image mapping
